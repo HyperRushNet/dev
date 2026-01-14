@@ -8,207 +8,172 @@
     <style>
         :root {
             --bg: #050505;
-            --surface: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
             --primary: #4169E1;
             --text-main: #ffffff;
-            --text-dim: #777;
-            --border: #161616;
-            --code-bg: #000;
-            
-            /* Syntax */
-            --sh-kw: #ff7b72;
-            --sh-st: #a5d6ff;
-            --sh-pr: #79c0ff;
-            --sh-cm: #444;
-            --sh-nu: #d2a8ff;
+            --text-dim: #888;
+            --border: #1a1a1a;
+            --hover-bg: rgba(65, 105, 225, 0.06);
+            --scrollbar-bg: #080808;
+            --scrollbar-thumb: #222;
         }
 
-        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        /* Custom Scrollbar Dark */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scrollbar-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; }
+        * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg); box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body {
             margin: 0; font-family: 'Inter', system-ui, sans-serif;
-            background: var(--bg); color: var(--text-main); line-height: 1.7;
-            background-image: radial-gradient(circle at top, #0f172a 0%, var(--bg) 600px);
+            background: var(--bg); color: var(--text-main); line-height: 1.6;
+            background-image: radial-gradient(circle at 50% 0%, #111827 0%, var(--bg) 800px);
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 100px 25px 0 25px; }
-        
-        header { margin-bottom: 80px; }
-        .badge { font-size: 0.7rem; color: var(--primary); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; display: block; }
-        h1 { font-size: 2.8rem; margin: 0; letter-spacing: -2px; font-weight: 800; }
-        .hero-p { font-size: 1.15rem; color: var(--text-dim); margin-top: 10px; }
-
-        h2 { 
-            font-size: 1.25rem; margin-top: 90px; margin-bottom: 30px;
-            color: #fff; display: flex; align-items: center; gap: 15px;
-            text-transform: uppercase; letter-spacing: 1px;
+        /* Navigation */
+        nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px clamp(20px, 5vw, 60px);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000;
+            background: rgba(5, 5, 5, 0.7);
         }
-        h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-        h3 { font-size: 1rem; color: #fff; margin: 40px 0 15px 0; display: flex; align-items: center; gap: 10px; }
-        p { font-size: 1rem; color: var(--text-dim); margin-bottom: 25px; }
+        .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
 
-        .icon-ring {
+        .nav-links {display: flex; gap: clamp(15px, 3vw, 40px); transition: transform 0.3s ease; }
+        .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .menu-toggle { display: none; background: none; border: none; color: #fff; cursor: pointer; padding: 5px; z-index: 1001; }
+
+        /* Hero */
+        .hero { padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 60px); max-width: 1400px; margin: 0 auto; }
+        .badge { font-size: 0.65rem; color: var(--primary); letter-spacing: 2px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; display: block; }
+        h1 { font-size: clamp(2.2rem, 8vw, 3.8rem); margin: 0; letter-spacing: -0.04em; font-weight: 800; line-height: 1.1; color: #fff; }
+        .hero p { font-size: clamp(1rem, 2vw, 1.1rem); color: var(--text-dim); margin-top: 25px; max-width: 520px; }
+
+        /* Content Grid */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px) 100px clamp(20px, 5vw, 60px); }
+        .module-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+        .module-item {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+            padding: 35px; text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            display: flex; flex-direction: column; gap: 15px; width: 100%;
+        }
+        .module-item:hover { border-color: var(--primary); background: var(--hover-bg); transform: translateY(-4px); }
+
+        .icon-wrap {
+            color: var(--text-dim); width: 42px; height: 42px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
-            width: 36px; height: 36px; border-radius: 50%;
-            border: 1px solid var(--border);
-            color: var(--primary);
-            background: rgba(65, 105, 225, 0.03);
+            background: #000; border: 1px solid var(--border); transition: 0.3s;
+        }
+        .module-item:hover .icon-wrap { color: var(--primary); border-color: var(--primary); }
+
+        .module-title { display: block; color: #fff; font-size: 1.1rem; font-weight: 700; }
+        .module-desc { display: block; color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
+
+        footer {
+            padding: 40px clamp(20px, 5vw, 60px); border-top: 1px solid var(--border);
+            color: #333; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
+            display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;
+            max-width: 1400px; margin: 0 auto;
         }
 
-        /* Responsive Table Scroll */
-        .table-wrapper { 
-            margin: 25px 0; 
-            border: 1px solid var(--border); 
-            border-radius: 12px; 
-            overflow-x: auto; /* Enable horizontal scroll */
-            background: var(--surface);
-            -webkit-overflow-scrolling: touch;
+        /* Responsive Menu */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+                background: #000008; border-left: 1px solid var(--border);
+                flex-direction: column; padding: 100px 40px;
+                gap: 30px; z-index: 999; text-align: left;
+                box-shadow: -20px 0 40px rgba(0,0,0,0.5);
+            }
+            .nav-links.active { right: 0; }
         }
-        
-        table { width: 100%; min-width: 600px; border-collapse: collapse; background: var(--surface); }
-        th { padding: 18px; text-align: left; color: #444; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
-        td { padding: 18px; font-size: 0.9rem; border-bottom: 1px solid var(--border); color: #bbb; }
-        
-        .code-container { position: relative; margin: 20px 0; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; background: var(--code-bg); }
-        
-        .copy-btn {
-            position: absolute; top: 12px; right: 12px;
-            width: 34px; height: 34px;
-            display: flex; align-items: center; justify-content: center;
-            background: transparent; border: 1px solid var(--border);
-            color: #444; border-radius: 8px; cursor: pointer; transition: 0.2s;
-            padding: 0;
-        }
-        .copy-btn:hover { border-color: var(--primary); color: #fff; }
-        .copy-btn.success { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-        pre { padding: 22px; overflow-x: auto; margin: 0; font-size: 0.9rem; }
-        code { font-family: 'Fira Code', monospace; }
-
-        .sk { color: var(--sh-kw); } .ss { color: var(--sh-st); }
-        .sp { color: var(--sh-pr); } .sc { color: var(--sh-cm); }
-        .sn { color: var(--sh-nu); }
-
-        .req { color: var(--sh-kw); font-size: 0.6rem; font-weight: 800; margin-left: 8px; vertical-align: middle; opacity: 0.8; }
-        
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-top: 40px; }
-        .f-box b { color: #fff; display: block; margin-bottom: 6px; font-size: 1rem; }
-        .f-box span { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
-
-        footer { 
-            margin-top: 100px; 
-            padding: 30px 0; 
-            border-top: 1px solid var(--border); 
-            color: #222; 
-            text-align: center; 
-            font-size: 0.8rem; 
-            font-weight: 600; 
+        @media (max-width: 500px) {
+            .module-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <span class="badge">v1.0.1 Stable</span>
-        <h1>embed.min.js</h1>
-        <p class="hero-p">High-performance environment isolation for secure HTML5 game deployment.</p>
-    </header>
+<nav>
+    <a href="#" class="logo">
+        <i data-lucide="zap" fill="currentColor" size="18"></i> HYPERRUSH
+    </a>
 
-    <section>
-        <h2>
-            <div class="icon-ring"><i data-lucide="settings-2" size="18"></i></div>
-            Configuration
-        </h2>
-        <p>Pass these parameters into the <code>init()</code> method to control the instance behavior.</p>
-        
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>containerId</code><span class="req">REQUIRED</span></td><td>String</td><td>-</td><td>Target element ID.</td></tr>
-                    <tr><td><code>nr</code><span class="req">REQUIRED</span></td><td>Number</td><td>-</td><td>Unique Game ID.</td></tr>
-                    <tr><td><code>credits</code></td><td>Boolean</td><td><code>true</code></td><td>HyperRush watermark.</td></tr>
-                    <tr><td><code>redirectBlock</code></td><td>Boolean</td><td><code>true</code></td><td>Mutes logs & redirects.</td></tr>
-                    <tr><td><code>extraPermissions</code></td><td>String</td><td><code>""</code></td><td>Sandbox flags.</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+    <button class="menu-toggle" id="menuBtn" aria-label="Toggle Menu">
+        <i data-lucide="menu"></i>
+    </button>
 
-    <section>
-        <h2>
-            <div class="icon-ring"><i data-lucide="terminal" size="18"></i></div>
-            Methods
-        </h2>
-        
-        <h3>.init(config)</h3>
-        <p>Bootstraps the runtime, initializes the loader, and mounts the iframe.</p>
-        <div class="code-container">
-            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="16"></i></button>
-            <pre><code><span class="sc">// Initialize instance</span>
-<span class="sp">HyperRush</span>.init({
-    <span class="sp">containerId</span>: <span class="ss">'game-box'</span>,
-    <span class="sp">nr</span>: <span class="sn">12</span>
-});</code></pre>
-        </div>
+    <div class="nav-links" id="navLinks">
+        <a href="https://github.com/HyperRushNet/hyperrushnet.github.io">GitHub</a>
+        <a href="mailto:hyperrushnetwork@gmail.com">Contact us</a>
+    </div>
+</nav>
 
-        <h3>.destroy(id)</h3>
-        <p>Safe termination: resets the source and clears all animation loops.</p>
-        <div class="code-container">
-            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="16"></i></button>
-            <pre><code><span class="sc">// Complete memory cleanup</span>
-<span class="sp">HyperRush</span>.destroy(<span class="ss">'game-box'</span>);</code></pre>
-        </div>
-    </section>
-
-    <section>
-        <h2>
-            <div class="icon-ring"><i data-lucide="shield-check" size="18"></i></div>
-            Automation
-        </h2>
-        <div class="feature-grid">
-            <div class="f-box">
-                <b>I/O Management</b>
-                <span>When active, <code>console</code> output within the sandbox is silenced to keep the host clean.</span>
-            </div>
-            <div class="f-box">
-                <b>Lifecycle Sync</b>
-                <span>Uses <code>visibilitychange</code> to pause games when users switch tabs or minimize windows.</span>
-            </div>
-            <div class="f-box">
-                <b>Smart Sandbox</b>
-                <span>Enforces strict policies to prevent unauthorized popups or frame-breaking attempts.</span>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        &copy; 2026 HYPERRUSH GAMING.
-    </footer>
+<div class="hero">
+    <span class="badge">Ecosystem V1.0</span>
+    <h1>The Future of <br>Web Gaming.</h1>
+    <p>Plug-and-play infrastructure for secure, unblocked, and high-performance HTML5 experiences. Zero friction, anywhere.</p>
 </div>
 
+<div class="container">
+    <div class="module-grid">
+        <a href="#" class="module-item">
+            <div class="icon-wrap"><i data-lucide="book-text" size="18"></i></div>
+            <div>
+                <span class="module-title">Documentation</span>
+                <span class="module-desc">Full integration specs for the embed.min.js runtime.</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<footer>
+    <span>&copy; 2026 HYPERRUSH GAMING</span>
+    <span>v1.0.1_STABLE</span>
+</footer>
+
 <script>
-    lucide.createIcons();
-    async function copyCode(button) {
-        const code = button.nextElementSibling.innerText;
-        try {
-            await navigator.clipboard.writeText(code);
-            const originalInner = button.innerHTML;
-            button.classList.add('success');
-            button.innerHTML = '<i data-lucide="check" size="18"></i>';
-            lucide.createIcons();
-            setTimeout(() => {
-                button.classList.remove('success');
-                button.innerHTML = originalInner;
-                lucide.createIcons();
-            }, 1500);
-        } catch (err) { console.error(err); }
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+        // Init icons
+        lucide.createIcons();
+
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        if (menuBtn && navLinks) {
+            const toggleMenu = (open) => {
+                navLinks.classList.toggle('active', open);
+                const iconElement = menuBtn.querySelector('i');
+                if (iconElement) {
+                    // Forceer refresh van Lucide icoon
+                    iconElement.setAttribute('data-lucide', open ? 'x' : 'menu');
+                    lucide.createIcons();
+                }
+            };
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = navLinks.classList.contains('active');
+                toggleMenu(!isOpen);
+            });
+
+            document.addEventListener('click', (e) => {
+                if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+                    toggleMenu(false);
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>
