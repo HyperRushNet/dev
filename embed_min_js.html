@@ -24,7 +24,6 @@
         }
 
         * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-
         body {
             margin: 0; font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg); color: var(--text-main); line-height: 1.7;
@@ -33,7 +32,6 @@
         }
 
         .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 100px 25px 0 25px; }
-        
         header { margin-bottom: 80px; }
         .badge { font-size: 0.7rem; color: var(--primary); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; display: block; }
         h1 { font-size: 2.8rem; margin: 0; letter-spacing: -2px; font-weight: 800; }
@@ -62,7 +60,7 @@
             margin: 25px 0; 
             border: 1px solid var(--border); 
             border-radius: 12px; 
-            overflow-x: auto; /* Enable horizontal scroll */
+            overflow-x: auto; 
             background: var(--surface);
             -webkit-overflow-scrolling: touch;
         }
@@ -80,6 +78,7 @@
             background: transparent; border: 1px solid var(--border);
             color: #444; border-radius: 8px; cursor: pointer; transition: 0.2s;
             padding: 0;
+            z-index: 10;
         }
         .copy-btn:hover { border-color: var(--primary); color: #fff; }
         .copy-btn.success { background: var(--primary); color: #fff; border-color: var(--primary); }
@@ -116,6 +115,19 @@
         <h1>embed.min.js</h1>
         <p class="hero-p">High-performance environment isolation for secure HTML5 game deployment.</p>
     </header>
+
+    <section>
+        <h2>
+            <div class="icon-ring"><i data-lucide="zap" size="18"></i></div>
+            Quick Start
+        </h2>
+        <p>Incorporate the library via CDN to begin using the <code>HyperRush</code> global object.</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="16"></i></button>
+            <pre><code><span class="sc">&lt;!-- Add to your &lt;head&gt; --&gt;</span>
+<span class="sk">&lt;script</span> <span class="sp">src</span>=<span class="ss">"https://cdn.jsdelivr.net/gh/HyperRushNet/game/1.0.1_embed.min.js"</span><span class="sk">&gt;&lt;/script&gt;</span></code></pre>
+        </div>
+    </section>
 
     <section>
         <h2>
