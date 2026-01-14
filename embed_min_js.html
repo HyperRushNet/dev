@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HyperRush | Developer Portal</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --primary: #4169E1;
+            --text-main: #ffffff;
+            --text-dim: #777;
+            --border: #161616;
+            --code-bg: #000;
+            
+            /* Syntax */
+            --sh-kw: #ff7b72;
+            --sh-st: #a5d6ff;
+            --sh-pr: #79c0ff;
+            --sh-cm: #444;
+            --sh-nu: #d2a8ff;
+        }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body {
+            margin: 0; font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg); color: var(--text-main); line-height: 1.7;
+            background-image: radial-gradient(circle at top, #0f172a 0%, var(--bg) 600px);
+            background-attachment: fixed;
+        }
+
+        .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 100px 25px 0 25px; }
+        
+        header { margin-bottom: 80px; }
+        .badge { font-size: 0.7rem; color: var(--primary); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; display: block; }
+        h1 { font-size: 2.8rem; margin: 0; letter-spacing: -2px; font-weight: 800; }
+        .hero-p { font-size: 1.15rem; color: var(--text-dim); margin-top: 10px; }
+
+        h2 { 
+            font-size: 1.25rem; margin-top: 90px; margin-bottom: 30px;
+            color: #fff; display: flex; align-items: center; gap: 15px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        h3 { font-size: 1rem; color: #fff; margin: 40px 0 15px 0; display: flex; align-items: center; gap: 10px; }
+        p { font-size: 1rem; color: var(--text-dim); margin-bottom: 25px; }
+
+        .icon-ring {
+            display: flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            background: rgba(65, 105, 225, 0.03);
+        }
+
+        /* Responsive Table Scroll */
+        .table-wrapper { 
+            margin: 25px 0; 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            overflow-x: auto; /* Enable horizontal scroll */
+            background: var(--surface);
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        table { width: 100%; min-width: 600px; border-collapse: collapse; background: var(--surface); }
+        th { padding: 18px; text-align: left; color: #444; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+        td { padding: 18px; font-size: 0.9rem; border-bottom: 1px solid var(--border); color: #bbb; }
+        
+        .code-container { position: relative; margin: 20px 0; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; background: var(--code-bg); }
+        
+        .copy-btn {
+            position: absolute; top: 12px; right: 12px;
+            width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent; border: 1px solid var(--border);
+            color: #444; border-radius: 8px; cursor: pointer; transition: 0.2s;
+            padding: 0;
+        }
+        .copy-btn:hover { border-color: var(--primary); color: #fff; }
+        .copy-btn.success { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        pre { padding: 22px; overflow-x: auto; margin: 0; font-size: 0.9rem; }
+        code { font-family: 'Fira Code', monospace; }
+
+        .sk { color: var(--sh-kw); } .ss { color: var(--sh-st); }
+        .sp { color: var(--sh-pr); } .sc { color: var(--sh-cm); }
+        .sn { color: var(--sh-nu); }
+
+        .req { color: var(--sh-kw); font-size: 0.6rem; font-weight: 800; margin-left: 8px; vertical-align: middle; opacity: 0.8; }
+        
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-top: 40px; }
+        .f-box b { color: #fff; display: block; margin-bottom: 6px; font-size: 1rem; }
+        .f-box span { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
+
+        footer { 
+            margin-top: 100px; 
+            padding: 30px 0; 
+            border-top: 1px solid var(--border); 
+            color: #222; 
+            text-align: center; 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <span class="badge">v1.0.1 Stable</span>
+        <h1>embed.min.js</h1>
+        <p class="hero-p">High-performance environment isolation for secure HTML5 game deployment.</p>
+    </header>
+
+    <section>
+        <h2>
+            <div class="icon-ring"><i data-lucide="settings-2" size="18"></i></div>
+            Configuration
+        </h2>
+        <p>Pass these parameters into the <code>init()</code> method to control the instance behavior.</p>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>containerId</code><span class="req">REQUIRED</span></td><td>String</td><td>-</td><td>Target element ID.</td></tr>
+                    <tr><td><code>nr</code><span class="req">REQUIRED</span></td><td>Number</td><td>-</td><td>Unique Game ID.</td></tr>
+                    <tr><td><code>credits</code></td><td>Boolean</td><td><code>true</code></td><td>HyperRush watermark.</td></tr>
+                    <tr><td><code>redirectBlock</code></td><td>Boolean</td><td><code>true</code></td><td>Mutes logs & redirects.</td></tr>
+                    <tr><td><code>extraPermissions</code></td><td>String</td><td><code>""</code></td><td>Sandbox flags.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            <div class="icon-ring"><i data-lucide="terminal" size="18"></i></div>
+            Methods
+        </h2>
+        
+        <h3>.init(config)</h3>
+        <p>Bootstraps the runtime, initializes the loader, and mounts the iframe.</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="16"></i></button>
+            <pre><code><span class="sc">// Initialize instance</span>
+<span class="sp">HyperRush</span>.init({
+    <span class="sp">containerId</span>: <span class="ss">'game-box'</span>,
+    <span class="sp">nr</span>: <span class="sn">12</span>
+});</code></pre>
+        </div>
+
+        <h3>.destroy(id)</h3>
+        <p>Safe termination: resets the source and clears all animation loops.</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="16"></i></button>
+            <pre><code><span class="sc">// Complete memory cleanup</span>
+<span class="sp">HyperRush</span>.destroy(<span class="ss">'game-box'</span>);</code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>
+            <div class="icon-ring"><i data-lucide="shield-check" size="18"></i></div>
+            Automation
+        </h2>
+        <div class="feature-grid">
+            <div class="f-box">
+                <b>I/O Management</b>
+                <span>When active, <code>console</code> output within the sandbox is silenced to keep the host clean.</span>
+            </div>
+            <div class="f-box">
+                <b>Lifecycle Sync</b>
+                <span>Uses <code>visibilitychange</code> to pause games when users switch tabs or minimize windows.</span>
+            </div>
+            <div class="f-box">
+                <b>Smart Sandbox</b>
+                <span>Enforces strict policies to prevent unauthorized popups or frame-breaking attempts.</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 HYPERRUSH GAMING.
+    </footer>
+</div>
+
+<script>
+    lucide.createIcons();
+    async function copyCode(button) {
+        const code = button.nextElementSibling.innerText;
+        try {
+            await navigator.clipboard.writeText(code);
+            const originalInner = button.innerHTML;
+            button.classList.add('success');
+            button.innerHTML = '<i data-lucide="check" size="18"></i>';
+            lucide.createIcons();
+            setTimeout(() => {
+                button.classList.remove('success');
+                button.innerHTML = originalInner;
+                lucide.createIcons();
+            }, 1500);
+        } catch (err) { console.error(err); }
+    }
+</script>
+</body>
+</html>
