@@ -199,7 +199,7 @@
 
 <div class="container">
     <header>
-        <span class="badge">v1.1 Stable</span>
+        <span class="badge">v1.2 Stable</span>
         <h1>hrn-game.min.js</h1>
         <p class="hero-p">The high-performance Web Component for secure, isolated, and lazy-loaded HTML5 gaming.</p>
     </header>
@@ -214,7 +214,7 @@
         <div class="code-container">
             <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
             <pre><code><span class="sc">&lt;!-- 1. Include the script in your &lt;head&gt; --&gt;</span>
-<span class="sk">&lt;script</span> <span class="sp">src</span>=<span class="ss">"https://cdn.jsdelivr.net/gh/HyperRushNet/dev/lib/hrn-game_1.1_min.js"</span><span class="sk">&gt;&lt;/script&gt;</span>
+<span class="sk">&lt;script</span> <span class="sp">src</span>=<span class="ss">"https://cdn.jsdelivr.net/gh/HyperRushNet/dev/lib/hrn-game_1.2_min.js"</span><span class="sk">&gt;&lt;/script&gt;</span>
 
 <span class="sc">&lt;!-- 2. Use the custom element anywhere --&gt;</span>
 <span class="sk">&lt;hrn-game</span> <span class="sp">nr</span>=<span class="ss">"17"</span><span class="sk">&gt;&lt;/hrn-game&gt;</span></code></pre>
@@ -263,6 +263,12 @@
                         <td><code>""</code></td>
                         <td>Additional Sandbox flags (e.g. "camera").</td>
                     </tr>
+                    <tr>
+                        <td><code>provider</code></td>
+                        <td>String</td>
+                        <td><code>"https://hyperrushnet.github.io"</code></td>
+                        <td>Change the start url for the game. (Change provider)</td>
+                   </tr>
                 </tbody>
             </table>
         </div>
@@ -282,7 +288,7 @@
     body { margin: 0; background: #000; height: 100vh; }
     hrn-game { width: 100%; height: 100%; display: block; }
   <span class="sk">&lt;/style&gt;</span>
-  <span class="sk">&lt;script</span> <span class="sp">src</span>=<span class="ss">"https://cdn.jsdelivr.net/gh/HyperRushNet/dev/lib/hrn-game_1.1_min.js"</span><span class="sk">&gt;&lt;/script&gt;</span>
+  <span class="sk">&lt;script</span> <span class="sp">src</span>=<span class="ss">"https://cdn.jsdelivr.net/gh/HyperRushNet/dev/lib/hrn-game_1.2_min.js"</span><span class="sk">&gt;&lt;/script&gt;</span>
 <span class="sk">&lt;/head&gt;</span>
 <span class="sk">&lt;body&gt;</span>
   <span class="sk">&lt;hrn-game</span> <span class="sp">nr</span>=<span class="ss">"17"</span> <span class="sp">credits</span>=<span class="ss">"false"</span><span class="sk">&gt;&lt;/hrn-game&gt;</span>
