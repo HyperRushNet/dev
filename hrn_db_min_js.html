@@ -4,10 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>hrn.db.min.js | HyperRush Dev</title>
-    
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --bg: #050505;
@@ -18,16 +16,13 @@
             --text-dim: #777;
             --border: #161616;
             --code-bg: #000;
-
             --sh-kw: #ff7b72;
             --sh-st: #a5d6ff;
             --sh-pr: #79c0ff;
             --sh-cm: #444444;
             --sh-nu: #d2a8ff;
         }
-
         * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        
         body {
             margin: 0;
             font-family: 'Inter', system-ui, sans-serif;
@@ -37,40 +32,28 @@
             background-image: radial-gradient(circle at top, #0f172a 0%, var(--bg) 800px);
             background-attachment: fixed;
         }
-
         .container { width: 100%; max-width: 850px; margin: 0 auto; padding: 120px 25px; }
-        
-        header { margin-bottom: 100px; }
-
+        header { margin-bottom: 80px; }
         .badge { 
             font-size: 0.7rem; color: var(--primary); letter-spacing: 2px; font-weight: 800; 
             text-transform: uppercase; margin-bottom: 16px; display: inline-block;
             padding: 4px 12px; background: rgba(65, 105, 225, 0.1); border-radius: 20px;
         }
-
         h1 { font-size: 3.5rem; margin: 0; letter-spacing: -3px; font-weight: 800; line-height: 1; }
         .hero-p { font-size: 1.25rem; color: var(--text-dim); margin-top: 15px; max-width: 600px; }
-
         h2 { 
-            font-size: 1.1rem; margin-top: 100px; margin-bottom: 40px; color: #fff; 
+            font-size: 1.1rem; margin-top: 80px; margin-bottom: 40px; color: #fff; 
             display: flex; align-items: center; gap: 15px; text-transform: uppercase; letter-spacing: 2px;
         }
         h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-        h3 { font-size: 0.9rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin: 40px 0 15px 0; font-weight: 800; }
+        h3 { font-size: 0.9rem; border-bottom: 1px solid gray; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin: 40px 0 15px 0; font-weight: 800; }
         p { font-size: 1rem; color: var(--text-dim); margin-bottom: 30px; }
-
         .icon-ring {
             display: flex; align-items: center; justify-content: center;
             width: 40px; height: 40px; border-radius: 10px;
             border: 1px solid var(--border); color: var(--primary); background: var(--surface);
         }
-
-        .table-wrapper { margin: 30px 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--surface); }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { padding: 20px; color: #555; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
-        td { padding: 20px; font-size: 0.95rem; border-bottom: 1px solid var(--border); color: #ccc; }
-
+        ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#222;border-radius:10px;border:2px solid var(--bg)}::-webkit-scrollbar-thumb:hover{background:var(--primary)}html{scrollbar-width:thin;scrollbar-color:#222 var(--bg)}
         .code-container { position: relative; margin: 25px 0; border-radius: 14px; border: 1px solid var(--border); background: var(--code-bg); overflow: hidden; }
         .copy-btn {
             position: absolute; top: 15px; right: 15px; width: 36px; height: 36px;
@@ -78,18 +61,14 @@
             background: #0a0a0a; border: 1px solid var(--border); color: #555; border-radius: 10px; cursor: pointer; transition: 0.3s;
         }
         .copy-btn:hover { border-color: var(--primary); color: #fff; }
-
         pre { padding: 25px; overflow-x: auto; margin: 0; font-size: 0.92rem; }
         code { font-family: 'Fira Code', monospace; white-space: pre; }
-        
         .sk { color: var(--sh-kw); } .ss { color: var(--sh-st); } .sp { color: var(--sh-pr); } .sc { color: var(--sh-cm); } .sn { color: var(--sh-nu); }
-
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; margin-top: 50px; }
         .f-box { padding: 35px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; transition: 0.3s; }
         .f-box:hover { border-color: #333; transform: translateY(-5px); }
         .f-box b { color: #fff; display: block; margin-bottom: 12px; font-size: 1.1rem; letter-spacing: -0.5px; }
         .f-box span { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; display: block; }
-
         footer { margin-top: 150px; padding: 50px 0; border-top: 1px solid var(--border); color: #333; text-align: center; font-size: 0.75rem; letter-spacing: 2px; font-weight: 700; }
     </style>
 </head>
@@ -98,20 +77,29 @@
 <div class="container">
     <header>
         <span class="badge">v1.0 Stable</span>
-        <h1>hrn.db</h1>
+        <h1>hrn.db.min.js</h1>
         <p class="hero-p">HyperRush's advanced data engine. Specialized logic for sub-millisecond game retrieval and metadata processing.</p>
     </header>
 
-    <section id="implementation">
-        <h2><div class="icon-ring"><i data-lucide="zap" size="20"></i></div> Quick Start</h2>
-        <p>Import the engine and query the global <code>hrn.db</code> object. All methods return Promises.</p>
-        
+    <section id="import">
+        <h2><div class="icon-ring"><i data-lucide="download" size="20"></i></div> Import</h2>
+        <p>Include the minified library directly in your project via JSDelivr CDN.</p>
         <div class="code-container">
             <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
-            <pre><code><span class="sc">// Strictly find Action games for PC</span>
-<span class="sk">const</span> <span class="sp">results</span> = <span class="sk">await</span> hrn.db.<span class="sp">find</span>({ 
-  <span class="sp">category</span>: <span class="ss">"Action"</span>, 
-  <span class="sp">device</span>: <span class="ss">"pc-no-touch"</span> 
+            <pre><code><span class="sc">&lt;!-- Global Database Engine --&gt;</span>
+<span class="sk">&lt;script</span> <span class="sp">src</span>=<span class="ss">"https://cdn.jsdelivr.net/gh/HyperRushNet/dev/lib/hrn.db.min.js"</span><span class="sk">&gt;&lt;/script&gt;</span></code></pre>
+        </div>
+    </section>
+
+    <section id="implementation">
+        <h2><div class="icon-ring"><i data-lucide="zap" size="20"></i></div> Quick Start</h2>
+        <p>Once imported, the engine initializes the global <code>hrn.db</code> object. All methods are asynchronous.</p>
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="sc">// Find Action games optimized for Desktop</span>
+<span class="sk">const</span> <span class="sp">results</span> = <span class="sk">await</span> hrn.db.<span class="sp">find</span>({
+   <span class="sp">category</span>: <span class="ss">"Action"</span>,
+   <span class="sp">device</span>: <span class="ss">"pc-no-touch"</span> 
 });</code></pre>
         </div>
     </section>
@@ -126,7 +114,7 @@
         <p>Broad fuzzy search scanning names and categories. Automatically sorts results by relevance.</p>
 
         <h3>&bull; getMeta()</h3>
-        <p>Returns database statistics and unique filter values for your UI.</p>
+        <p>Returns database statistics and unique filter values for your UI components.</p>
         <div class="code-container">
             <pre><code>{
   <span class="sp">"total"</span>: <span class="sn">42</span>,
@@ -141,7 +129,7 @@
         <div class="feature-grid">
             <div class="f-box">
                 <b>Encapsulation</b>
-                <span>Logic is fully self-contained within the <code>hrn</code> namespace to avoid conflicts with portal scripts.</span>
+                <span>Logic is fully self-contained within the <code>hrn</code> namespace to avoid conflicts with other scripts.</span>
             </div>
             <div class="f-box">
                 <b>Lazy Caching</b>
@@ -149,7 +137,7 @@
             </div>
             <div class="f-box">
                 <b>Pure Architecture</b>
-                <span>Built without DOM dependencies, making it compatible with any modern JS environment or workers.</span>
+                <span>Built without DOM dependencies, making <code>hrn.db.min.js</code> compatible with any JS environment.</span>
             </div>
         </div>
     </section>
@@ -175,6 +163,5 @@
         }
     }
 </script>
-
 </body>
 </html>
