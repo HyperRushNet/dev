@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>hrn.db | Documentation</title>
+    
+    <link rel="icon" type="image/png" href="./favicon.png">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --primary: #4169E1;
+            --text-main: #ffffff;
+            --text-dim: #9ca3af;
+            --border: #222;
+            --code-bg: #0a0a0a;
+            --accent: #22c55e;
+            
+            /* Scrollbar Colors */
+            --sb-thumb: #a0a0a0;
+            --sb-track: #050505;
+            --sb-hover: #ffffff;
+
+            /* Syntax Highlighting */
+            --sh-key: #9cdcfe;
+            --sh-str: #ce9178;
+            --sh-num: #b5cea8;
+            --sh-kw: #569cd6;
+        }
+
+        /* --- Scrollbar Styling (Elegant Light Theme) --- */
+        * { 
+            box-sizing: border-box; 
+            -webkit-font-smoothing: antialiased; 
+            scrollbar-width: thin;
+            scrollbar-color: var(--sb-thumb) var(--sb-track);
+        }
+
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--sb-track); }
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--sb-thumb);
+            border-radius: 10px;
+            border: 3px solid var(--sb-track);
+        }
+        ::-webkit-scrollbar-thumb:hover { background-color: var(--sb-hover); }
+
+        /* --- Global Styles --- */
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            word-wrap: break-word;
+            background-image: radial-gradient(circle at 50% 0%, rgba(65, 105, 225, 0.15) 0%, transparent 600px);
+            background-attachment: fixed;
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 80px 20px; 
+        }
+
+        header { margin-bottom: 80px; border-bottom: 1px solid var(--border); padding-bottom: 60px; }
+        
+        h1 { font-size: 3rem; margin: 0 0 15px 0; font-weight: 800; letter-spacing: -2px; line-height: 1.1; }
+        
+        .hero-p { 
+            font-size: 1.25rem; color: var(--text-dim); max-width: 700px; margin: 0; 
+            line-height: 1.5;
+        }
+
+        h2 { 
+            font-size: 1.3rem; margin-top: 50px; margin-bottom: 20px;
+            color: #fff; display: flex; align-items: center; gap: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem; color: #fff; margin-top: 40px; margin-bottom: 15px; 
+            font-family: 'Fira Code', monospace; display: flex; align-items: center; gap: 10px;
+        }
+
+        p { color: var(--text-dim); margin-bottom: 20px; font-size: 1rem; }
+
+        /* --- Code Blocks --- */
+        .code-block { 
+            position: relative; margin: 25px 0; border-radius: 8px; 
+            border: 1px solid var(--border); background: var(--code-bg); 
+            overflow: hidden; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        pre { padding: 25px; overflow-x: auto; margin: 0; font-size: 0.9rem; }
+        code { font-family: 'Fira Code', monospace; }
+        
+        .tag { color: #569CD6; } .attr { color: #9CDCFE; } .str { color: #CE9178; }
+
+        .copy-btn {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: #888; border-radius: 6px; padding: 6px; cursor: pointer; transition: 0.2s;
+        }
+        .copy-btn:hover { color: #fff; border-color: var(--primary); }
+
+        /* --- Tables --- */
+        .table-wrap {
+            overflow-x: auto; border: 1px solid var(--border);
+            border-radius: 8px; background: var(--surface);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { 
+            text-align: left; padding: 18px 24px; background: #111; color: #fff; 
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+        }
+        td { padding: 18px 24px; border-bottom: 1px solid var(--border); color: var(--text-dim); font-size: 0.95rem; }
+        tr:last-child td { border-bottom: none; }
+        
+        .req { color: #ef4444; font-size: 0.65rem; font-weight: bold; background: rgba(239,68,68,0.1); padding: 2px 6px; border-radius: 4px; margin-left: 5px; }
+        .type { font-family: 'Fira Code', monospace; font-size: 0.8em; color: #e0e0e0; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; }
+
+        /* --- Live Explorer & Buttons --- */
+        .explorer-controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        
+        .search-input {
+            flex: 1; padding: 12px 16px; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 8px; color: #fff;
+            font-family: inherit; font-size: 0.95rem; outline: none; min-width: 200px;
+            transition: 0.2s;
+        }
+        .search-input:focus { border-color: var(--primary); }
+        
+        /* Outline Button Style */
+        .run-btn {
+            padding: 8px 20px; 
+            background: transparent; 
+            border: 1px solid var(--primary);
+            color: var(--primary); 
+            border-radius: 6px; 
+            font-weight: 600; 
+            cursor: pointer;
+            display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .run-btn:hover { 
+            background: rgba(65, 105, 225, 0.1); 
+            color: #fff;
+            box-shadow: 0 0 15px rgba(65, 105, 225, 0.2); 
+        }
+
+        #explorer-output {
+            max-height: 400px; overflow-y: auto; 
+            font-family: 'Fira Code', monospace; font-size: 0.85rem;
+        }
+
+        /* Syntax Highlight Spans */
+        .s-key { color: var(--sh-key); } .s-str { color: var(--sh-str); }
+        .s-num { color: var(--sh-num); } .s-kw { color: var(--sh-kw); }
+        .s-com { color: var(--sh-com); font-style: italic; }
+
+        footer { 
+            margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border); 
+            color: #666; text-align: center; font-size: 0.8rem; letter-spacing: 1px; 
+            font-weight: 600; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>hrn.db</h1>
+        <p class="hero-p">
+            The high-performance, asynchronous interface for the HyperRush Game Catalog. 
+            Includes features for searching, filtering, favorites management, and random picks.
+        </p>
+    </header>
+
+    <section>
+        <h2><i data-lucide="download" size="20"></i> 1. Import Script</h2>
+        <p>
+            Place this script in the <code>&lt;head&gt;</code> of your document. 
+            The library automatically initializes the global <code>window.hrn.db</code> object.
+        </p>
+        
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://cdn.jsdelivr.net/gh/Odne2920/hrn-libs/1.2/lib.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span></code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2><i data-lucide="server" size="20"></i> 2. Data Structure</h2>
+        <p>
+            The database consists of an array of immutable <code>GameObject</code> entries. 
+            All API methods return data in this format.
+        </p>
+
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="s-kw">interface</span> GameObject {
+  <span class="s-key">"number"</span>: <span class="s-num">1</span>,                           <span class="s-com">// Unique ID</span>
+  <span class="s-key">"name"</span>: <span class="s-str">"10 Minutes Till Dawn"</span>,        <span class="s-com">// Display Title</span>
+  <span class="s-key">"category"</span>: <span class="s-str">"Survival"</span>,                <span class="s-com">// Main Genre</span>
+  <span class="s-key">"img"</span>: <span class="s-str">"/images/10-minutes.webp"</span>,      <span class="s-com">// Thumbnail Path</span>
+  <span class="s-key">"link"</span>: <span class="s-str">"/games/10-minutes/"</span>,          <span class="s-com">// Game Root Path</span>
+  <span class="s-key">"device"</span>: [                            <span class="s-com">// Supported Devices</span>
+    <span class="s-str">"pc-touch"</span>,
+    <span class="s-str">"pc-no-touch"</span>
+  ]
+}</code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2><i data-lucide="box" size="20"></i> 3. Core Methods</h2>
+        <p>All methods are accessible via <code>window.hrn.db</code> and return a <code>Promise</code> (async).</p>
+
+        <h3>.search(query)</h3>
+        <p>Performs a fuzzy search across Name, Category, and Device tags. Results are sorted by relevance.</p>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="s-kw">const</span> results = <span class="s-kw">await</span> hrn.db.<span class="s-kw">search</span>(<span class="s-str">"survival"</span>);</code></pre>
+        </div>
+
+        <h3>.find(criteria)</h3>
+        <p>Filters the database for exact matches on specific properties.</p>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="s-kw">const</span> touchGames = <span class="s-kw">await</span> hrn.db.<span class="s-kw">find</span>({ 
+    <span class="s-key">device</span>: <span class="s-str">"pc-touch"</span>,
+    <span class="s-key">category</span>: <span class="s-str">"Survival"</span>
+});</code></pre>
+        </div>
+
+        <h3>.random()</h3>
+        <p>Returns a single, randomly selected Game Object from the database.</p>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="s-kw">const</span> luckyPick = <span class="s-kw">await</span> hrn.db.<span class="s-kw">random</span>();
+<span class="s-com">// Output: { name: "Bacon May Die", number: 17 ... }</span></code></pre>
+        </div>
+
+        <h3>.toggleFav(id) & .getFavs()</h3>
+        <p>Manages user favorites via LocalStorage. No account required.</p>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="s-com">// 1. Toggle ID 17 (Add/Remove)</span>
+hrn.db.<span class="s-kw">toggleFav</span>(<span class="s-num">17</span>);
+
+<span class="s-com">// 2. Fetch full objects of favorite games</span>
+<span class="s-kw">const</span> myGames = <span class="s-kw">await</span> hrn.db.<span class="s-kw">getFavs</span>();</code></pre>
+        </div>
+
+        <h3>.all() & .getMeta()</h3>
+        <p>Utilities for fetching the complete dataset or statistical metadata.</p>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="s-kw">const</span> allGames = <span class="s-kw">await</span> hrn.db.<span class="s-kw">all</span>();
+<span class="s-kw">const</span> meta = <span class="s-kw">await</span> hrn.db.<span class="s-kw">getMeta</span>();</code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2><i data-lucide="terminal" size="20"></i> 4. Live Data Explorer</h2>
+        <p>Test the API directly in your browser. This uses the loaded library.</p>
+
+        <div class="explorer-controls">
+            <input type="text" id="ex-input" class="search-input" placeholder="e.g. '10 minutes' or 'survival'...">
+            <button class="run-btn" onclick="runSearch()"><i data-lucide="play" size="16"></i> .search()</button>
+            <button class="run-btn" onclick="runRandom()"><i data-lucide="shuffle" size="16"></i> .random()</button>
+            <button class="run-btn" onclick="runAll()"><i data-lucide="list" size="16"></i> .all()</button>
+        </div>
+
+        <div class="code-block" id="explorer-output" style="min-height: 150px; background: #000;">
+            <div style="padding: 20px; color: #555; font-style: italic;">
+                // JSON Output will appear here...
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 HyperRush Games
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/Odne2920/hrn-libs/1.2/lib.min.js"></script>
+
+<script>
+    lucide.createIcons();
+
+    // Copy to Clipboard
+    async function copyCode(btn) {
+        const code = btn.nextElementSibling.innerText;
+        try {
+            await navigator.clipboard.writeText(code);
+            const original = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="check" size="18" style="color:#22c55e"></i>';
+            lucide.createIcons();
+            setTimeout(() => { btn.innerHTML = original; lucide.createIcons(); }, 2000);
+        } catch (e) {}
+    }
+
+    // JSON Syntax Highlighter
+    function renderJSON(data) {
+        const json = JSON.stringify(data, null, 2);
+        const highlighted = json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            let cls = 's-num';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 's-key';
+                } else {
+                    cls = 's-str';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 's-kw';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+        document.getElementById('explorer-output').innerHTML = `<pre style="margin:0;">${highlighted}</pre>`;
+    }
+
+    // Interactive Logic
+    async function runSearch() {
+        const output = document.getElementById('explorer-output');
+        const term = document.getElementById('ex-input').value;
+        output.innerHTML = '<div style="padding:20px;">Running query...</div>';
+        
+        try {
+            const res = await window.hrn.db.search(term);
+            renderJSON(res);
+        } catch(e) {
+            output.innerHTML = `<div style="padding:20px; color:red;">Error: ${e.message}</div>`;
+        }
+    }
+
+    async function runRandom() {
+        const output = document.getElementById('explorer-output');
+        output.innerHTML = '<div style="padding:20px;">Picking random game...</div>';
+        try {
+            const res = await window.hrn.db.random();
+            renderJSON(res);
+        } catch(e) {
+            output.innerHTML = `<div style="padding:20px; color:red;">Error: ${e.message}</div>`;
+        }
+    }
+
+    async function runAll() {
+        const output = document.getElementById('explorer-output');
+        output.innerHTML = '<div style="padding:20px;">Fetching all data...</div>';
+        
+        try {
+            const res = await window.hrn.db.all();
+            renderJSON(res);
+        } catch(e) {
+            output.innerHTML = `<div style="padding:20px; color:red;">Error: ${e.message}</div>`;
+        }
+    }
+</script>
+
+</body>
+</html>
