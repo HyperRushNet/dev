@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>hrn.stats | Documentation</title>
     
-    <link rel="icon" type="image/png" href="./favicon.png"> 
+    <link rel="icon" type="image/png" href="./favicon.png">
     
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -179,19 +178,7 @@
     </header>
 
     <section>
-        <h2><i data-lucide="download" size="20"></i> 1. Import Script</h2>
-        <p>
-            Add this <strong>after</strong> the core library. It automatically attaches listeners to <code>hrn-game</code> events.
-        </p>
-        
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
-            <pre><code><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://cdn.jsdelivr.net/gh/Odne2920/hrn-libs/1.2/lib.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span></code></pre>
-        </div>
-    </section>
-
-    <section>
-        <h2><i data-lucide="server" size="20"></i> 2. User Stats Object</h2>
+        <h2><i data-lucide="server" size="20"></i> 1. User Stats Object</h2>
         <p>
             The library maintains a persistent stats object in the user's browser.
             You can access this via <code>hrn.stats.get()</code>.
@@ -215,7 +202,7 @@
     </section>
 
     <section>
-        <h2><i data-lucide="box" size="20"></i> 3. Methods</h2>
+        <h2><i data-lucide="box" size="20"></i> 2. Methods</h2>
         <p>Access these methods via <code>window.hrn.stats</code>.</p>
 
         <h3>.getTop()</h3>
@@ -249,7 +236,7 @@
     </section>
 
     <section>
-        <h2><i data-lucide="terminal" size="20"></i> 4. Live Stats Explorer</h2>
+        <h2><i data-lucide="terminal" size="20"></i> 3. Live Stats Explorer</h2>
         <p>
             Simulate gameplay or view your current stats. 
             <em>Note: Requires the core library to be loaded first.</em>
