@@ -1,7 +1,7 @@
 function (e) {
     let t, r;
     const n =
-        "https://cdn.jsdelivr.net/gh/HyperRushNet/hyperrushnet.github.io/assets/json/games.json"
+        "https://cdn.jsdelivr.net/gh/HyperRushNet/hyperrushnet.github.io/assets/json/games.json" 
         , o = async () => t || r || (r =
                 fetch(n)
                 .then(e => e.ok ? e
