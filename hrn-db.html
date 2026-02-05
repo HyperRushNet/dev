@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -186,21 +185,9 @@
         </p>
     </header>
 
-    <section>
-        <h2><i data-lucide="download" size="20"></i> 1. Import Script</h2>
-        <p>
-            Place this script in the <code>&lt;head&gt;</code> of your document. 
-            The library automatically initializes the global <code>window.hrn.db</code> object.
-        </p>
-        
-        <div class="code-block">
-            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
-            <pre><code><span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://cdn.jsdelivr.net/gh/Odne2920/hrn-libs/1.2/lib.min.js"</span><span class="tag">&gt;&lt;/script&gt;</span></code></pre>
-        </div>
-    </section>
 
     <section>
-        <h2><i data-lucide="server" size="20"></i> 2. Data Structure</h2>
+        <h2><i data-lucide="server" size="20"></i> 1. Data Structure</h2>
         <p>
             The database consists of an array of immutable <code>GameObject</code> entries. 
             All API methods return data in this format.
@@ -223,7 +210,7 @@
     </section>
 
     <section>
-        <h2><i data-lucide="box" size="20"></i> 3. Core Methods</h2>
+        <h2><i data-lucide="box" size="20"></i> 2. Core Methods</h2>
         <p>All methods are accessible via <code>window.hrn.db</code> and return a <code>Promise</code> (async).</p>
 
         <h3>.search(query)</h3>
@@ -272,7 +259,7 @@ hrn.db.<span class="s-kw">toggleFav</span>(<span class="s-num">17</span>);
     </section>
 
     <section>
-        <h2><i data-lucide="terminal" size="20"></i> 4. Live Data Explorer</h2>
+        <h2><i data-lucide="terminal" size="20"></i> 3. Live Data Explorer</h2>
         <p>Test the API directly in your browser. This uses the loaded library.</p>
 
         <div class="explorer-controls">
