@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>hrn-game-portal | Documentation</title>
+    
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --primary: #4169E1;
+            --text-main: #ffffff;
+            --text-dim: #9ca3af;
+            --border: #222;
+            --code-bg: #0a0a0a;
+            --accent: #22c55e;
+            
+            /* Scrollbar Colors */
+            --sb-thumb: #a0a0a0;
+            --sb-track: #050505;
+            --sb-hover: #ffffff;
+
+            /* Syntax Highlighting */
+            --sh-key: #9cdcfe;
+            --sh-str: #ce9178;
+            --sh-num: #b5cea8;
+            --sh-kw: #569cd6;
+            --sh-tag: #569CD6;
+            --sh-attr: #9CDCFE;
+        }
+
+        /* --- Global Styles --- */
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; scrollbar-width: thin; scrollbar-color: var(--sb-thumb) var(--sb-track); }
+        
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--sb-track); }
+        ::-webkit-scrollbar-thumb { background-color: var(--sb-thumb); border-radius: 10px; border: 3px solid var(--sb-track); }
+        ::-webkit-scrollbar-thumb:hover { background-color: var(--sb-hover); }
+
+        body {
+            margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.6;
+            overflow-x: hidden; word-wrap: break-word;
+            background-image: radial-gradient(circle at 50% 0%, rgba(65, 105, 225, 0.15) 0%, transparent 600px);
+            background-attachment: fixed;
+        }
+
+        .container { width: 100%; max-width: 900px; margin: 0 auto; padding: 80px 20px; }
+        header { margin-bottom: 80px; border-bottom: 1px solid var(--border); padding-bottom: 60px; }
+        h1 { font-size: 3rem; margin: 0 0 15px 0; font-weight: 800; letter-spacing: -2px; line-height: 1.1; }
+        .hero-p { font-size: 1.25rem; color: var(--text-dim); max-width: 700px; margin: 0; line-height: 1.5; }
+
+        h2 { font-size: 1.3rem; margin-top: 50px; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        h3 { font-size: 1.1rem; color: #fff; margin-top: 40px; margin-bottom: 15px; font-family: 'Fira Code', monospace; display: flex; align-items: center; gap: 10px; }
+        p { color: var(--text-dim); margin-bottom: 20px; font-size: 1rem; }
+        code { font-family: 'Fira Code', monospace; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+
+        /* --- Code Blocks --- */
+        .code-block { position: relative; margin: 25px 0; border-radius: 8px; border: 1px solid var(--border); background: var(--code-bg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        pre { padding: 25px; overflow-x: auto; margin: 0; font-size: 0.9rem; }
+        .sh-tag { color: var(--sh-kw); } .sh-attr { color: var(--sh-key); } .sh-str { color: var(--sh-str); }
+        .copy-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #888; border-radius: 6px; padding: 6px; cursor: pointer; transition: 0.2s; }
+        .copy-btn:hover { color: #fff; border-color: var(--primary); }
+
+        /* --- Tables --- */
+        .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { text-align: left; padding: 18px 24px; background: #111; color: #fff; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+        td { padding: 18px 24px; border-bottom: 1px solid var(--border); color: var(--text-dim); font-size: 0.95rem; }
+        tr:last-child td { border-bottom: none; }
+        .req { color: #ef4444; font-size: 0.65rem; font-weight: bold; background: rgba(239,68,68,0.1); padding: 2px 6px; border-radius: 4px; margin-left: 5px; }
+
+        footer { margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border); color: #666; text-align: center; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>&lt;hrn-game-portal&gt;</h1>
+        <p class="hero-p">
+            An all-in-one gaming hub component. Instant search, lazy-loaded tiles, and a built-in game overlay with minimalist design.
+        </p>
+    </header>
+
+    <section>
+        <h2><i data-lucide="settings" size="20"></i> 1. Attributes</h2>
+        <p>Customize the look and data source of the entire portal using these attributes.</p>
+        
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="140">Attribute</th>
+                        <th width="80">Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>theme</code></td>
+                        <td><code>dark</code></td>
+                        <td>Switch between <code>dark</code> or <code>light</code> color modes.</td>
+                    </tr>
+                    <tr>
+                        <td><code>accent</code></td>
+                        <td><code>#4169E1</code></td>
+                        <td>Sets the primary color for borders, search icons, and loaders.</td>
+                    </tr>
+                    <tr>
+                        <td><code>height</code></td>
+                        <td><code>600px</code></td>
+                        <td>Defines the height of the portal container (e.g., <code>500px</code> or <code>80vh</code>).</td>
+                    </tr>
+                    <tr>
+                        <td><code>provider</code></td>
+                        <td>URL</td>
+                        <td>The base URL used to fetch game assets. Inherited by <code>&lt;hrn-game&gt;</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>credits</code></td>
+                        <td><code>true</code></td>
+                        <td>Set to <code>"false"</code> to hide the "Powered by" branding inside the game overlay.</td>
+                    </tr>
+                    <tr>
+                        <td><code>card-size</code></td>
+                        <td><code>220px</code></td>
+                        <td>Controls the minimum width of the game tiles in the grid.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2><i data-lucide="layout" size="20"></i> 2. Implementation Example</h2>
+        <p>A clean, minimalist setup with a custom accent color and credits disabled.</p>
+
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="sh-tag">&lt;hrn-game-portal</span> 
+    <span class="sh-attr">theme</span>=<span class="sh-str">"dark"</span> 
+    <span class="sh-attr">accent</span>=<span class="sh-str">"#22c55e"</span> 
+    <span class="sh-attr">height</span>=<span class="sh-str">"80vh"</span> 
+    <span class="sh-attr">credits</span>=<span class="sh-str">"false"</span><span class="sh-tag">&gt;</span>
+<span class="sh-tag">&lt;/hrn-game-portal&gt;</span></code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2><i data-lucide="mouse-pointer" size="20"></i> 3. Built-in Features</h2>
+        <p>The portal is designed to be autonomous and lightweight:</p>
+        <ul style="color: var(--text-dim); padding-left: 20px;">
+            <li><strong>Instant Search:</strong> Filter games by name or category in real-time.</li>
+            <li><strong>Minimalist UI:</strong> Clean outlines and semi-transparent "glass" backgrounds.</li>
+            <li><strong>Smart Overlay:</strong> Games open in a full-container overlay without reloading the page.</li>
+            <li><strong>Lazy Load:</strong> Only loads game data and assets when needed.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2><i data-lucide="code" size="20"></i> 4. Advanced: Events</h2>
+        <p>The portal emits the <code>game:ready</code> event from its internal <code>&lt;hrn-game&gt;</code> element, which bubbles up to the portal itself.</p>
+
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)"><i data-lucide="copy" size="18"></i></button>
+            <pre><code><span class="sh-kw">const</span> portal = <span class="sh-kw">document</span>.querySelector(<span class="sh-str">'hrn-game-portal'</span>);
+
+portal.addEventListener(<span class="sh-str">'game:ready'</span>, (e) => {
+    <span class="sh-kw">console</span>.log(<span class="sh-str">"Now playing game ID:"</span>, e.detail.id);
+});</code></pre>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 HyperRush Games
+    </footer>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    async function copyCode(btn) {
+        const code = btn.nextElementSibling.innerText;
+        try {
+            await navigator.clipboard.writeText(code);
+            const original = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="check" size="18" style="color:#22c55e"></i>';
+            lucide.createIcons();
+            setTimeout(() => { 
+                btn.innerHTML = original; 
+                lucide.createIcons(); 
+            }, 2000);
+        } catch (e) {}
+    }
+</script>
+</body>
+</html>
