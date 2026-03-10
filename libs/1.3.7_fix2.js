@@ -23,6 +23,13 @@
     }
 
     const norm = str => String(str ?? "").toLowerCase().trim();
+    
+    // Helper: Adds 'px' if input is a plain number, otherwise returns as-is
+    const parseStyleSize = (val, def) => {
+        if (!val) return def;
+        // If it's a number (e.g. "400"), add "px". If it contains letters (e.g. "100vh"), leave it.
+        return /^\d+$/.test(val) ? `${val}px` : val;
+    };
 
     window.hrn = {
         db: {
@@ -91,12 +98,6 @@
         }
     };
 
-    // Helper for dimensions (auto-adds 'px' if numeric)
-    const getDim = (val, def) => {
-        if (!val) return def;
-        return isNaN(val) ? val : `${val}px`;
-    };
-
     class HRNGame extends HTMLElement {
         constructor() {
             super();
@@ -105,20 +106,32 @@
         connectedCallback() {
             this.nr = this.getAttribute("nr");
             if (!this.nr) return;
+
             this.credits = this.getAttribute("credits") !== "false";
             this.redirectblock = this.getAttribute("redirectblock") !== "false";
             this.provider = this.getAttribute("provider") || "https://hyperrushnet.github.io";
+
+            // FIX: Force dimensions directly on the element style (highest priority)
+            const w = parseStyleSize(this.getAttribute("width"), "100%");
+            const h = parseStyleSize(this.getAttribute("height"), "100%");
+            this.style.width = w;
+            this.style.height = h;
+            this.style.display = "block"; // Ensure block display
+
             this.render();
             this.loadGame();
         }
         render() {
             const accent = getComputedStyle(this).getPropertyValue("--hrn-color") || "#4169E1";
-            // Support direct height/width attributes on the game element
-            const height = getDim(this.getAttribute("height"), "100%");
-            const width = getDim(this.getAttribute("width"), "100%");
-
             const css = `
-                :host { display: block; width: ${width}; height: ${height}; position: relative; background: #000; overflow: hidden; }
+                :host { 
+                    display: block; 
+                    width: 100%; /* Fills the space set by this.style.width */
+                    height: 100%; 
+                    position: relative; 
+                    background: #000; 
+                    overflow: hidden; 
+                }
                 .ldr { width: 40px; height: 40px; border: 4px solid #222; border-top-color: ${accent.trim()}; border-radius: 50%; animation: spin 1s linear infinite; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
                 @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
                 .pc { width: 100%; height: 100%; position: relative; overflow: hidden; }
@@ -159,6 +172,13 @@
             this._debounceTimer = null;
         }
         connectedCallback() {
+            // FIX: Force dimensions directly on the element style
+            const w = parseStyleSize(this.getAttribute("width"), "100%");
+            const h = parseStyleSize(this.getAttribute("height"), "600px");
+            this.style.width = w;
+            this.style.height = h;
+            this.style.display = "block";
+
             this.render();
             this.initialize();
         }
@@ -169,15 +189,12 @@
             const fg = isDark ? "#fff" : "#000";
             const border = isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)";
             
-            // Robust dimension parsing
-            const height = getDim(this.getAttribute("height"), "600px");
-            const width = getDim(this.getAttribute("width"), "100%");
-            const cardSize = getDim(this.getAttribute("card-size"), "220px");
+            const cardSize = parseStyleSize(this.getAttribute("card-size"), "220px");
 
             const scrollbarCSS = `.w { -ms-overflow-style: none; scrollbar-width: none; } .w::-webkit-scrollbar { display: none; }`;
 
             const css = `
-                :host { display: block; position: relative; width: ${width}; height: ${height}; background: ${bg}; color: ${fg}; font-family: sans-serif; overflow: hidden; border: 1px solid ${border}; }
+                :host { display: block; position: relative; width: 100%; height: 100%; background: ${bg}; color: ${fg}; font-family: sans-serif; overflow: hidden; border: 1px solid ${border}; }
                 .msg { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 20px; text-align: center; }
                 .ldr { width: 40px; height: 40px; border: 2px solid ${fg}22; border-top-color: ${accent}; border-radius: 50%; animation: spin 1s linear infinite; }
                 @keyframes spin { to { transform: rotate(360deg); } }
@@ -254,7 +271,8 @@
                 `).join("");
                 grid.querySelectorAll(".c").forEach(c => {
                     const open = () => {
-                        pc.innerHTML = `<hrn-game nr="${c.dataset.id}" provider="${provider}" credits="${credits}" style="height:100%; width:100%; display:block;"></hrn-game>`;
+                        // HRN-Game inside portal inherits 100% size of the overlay container
+                        pc.innerHTML = `<hrn-game nr="${c.dataset.id}" provider="${provider}" credits="${credits}"></hrn-game>`;
                         ov.classList.add("active");
                         w.classList.add("lock");
                         w.scrollTop = 0;
